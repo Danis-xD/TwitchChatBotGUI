@@ -68,7 +68,6 @@ namespace TwitchChatBotGUI
             while (true)
             {
                 string rawMessage = irc.ReadIrcMessage();
-                Console.WriteLine(rawMessage);
                 if (rawMessage == "PING :tmi.twitch.tv")
                 {
                      
