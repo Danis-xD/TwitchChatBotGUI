@@ -41,9 +41,13 @@ namespace TwitchChatBotGUI
             {
                 if (bot.JoinRoom(textBox3.Text))
                 {
-                    Thread t = new Thread(() => bot.Start());
+                    ChatLog chatLog = new ChatLog();
+                    chatLog.Show();
+                    Thread t = new Thread(() => bot.Start(chatLog));
                     t.Start();
-                    MessageBox.Show("Successfully connected to channel " + textBox3.Text);
+                    
+                    
+
                 }
                 else
                 {
@@ -74,6 +78,11 @@ namespace TwitchChatBotGUI
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://twitchapps.com/tmi/");
         }
     }
 }

@@ -8,10 +8,12 @@ namespace TwitchChatBotGUI
     
     class ChatBot
     {
+        ChatLog chatLog;
+        private string name;
         private IrcClient irc;
         public bool Connect(string oauth, string name)
         {
-            
+            this.name = name;
             irc = new IrcClient( name, oauth);
             irc.tcpClient.ReceiveTimeout = 3000;
             try
@@ -79,7 +81,9 @@ namespace TwitchChatBotGUI
                     string user = message[0].Split('!')[0];
                     string msg = rawMessage.Remove(0, message[0].Length);
                     Tuple<string, string> UsrMsgPair = new Tuple<string, string>(user, msg);
+                    chatLog.TextBox = UsrMsgPair.Item1 + ": " + UsrMsgPair.Item2;
                     return UsrMsgPair;
+
                 }
             }
         }
@@ -87,18 +91,21 @@ namespace TwitchChatBotGUI
         {
             return irc.GlobalTimeout();
         }
-        public void SendMessage(string message)
+        public void SendMessage( string message)
         {
+            
             irc.SendChatMessage(message);
+            chatLog.TextBox = name + ": " + message;
         }
-        public void Start()
+        public void Start(ChatLog chatLog)
         {
+            this.chatLog = chatLog;
             while (true)
             {
                 Tuple<string, string> message = ReadMessage();
                 if (CheckTimeout())
                 {
-                    SendMessage(message.Item1 + "asdf");
+                    SendMessage( message.Item1 + "asdf");
                 }
             }
         }

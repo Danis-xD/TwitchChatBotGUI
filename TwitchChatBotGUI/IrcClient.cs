@@ -58,6 +58,7 @@ namespace TwitchChatBotGUI
             string msg = message + "\r\n";
             Console.Write(msg);
             outputStream.WriteLine(msg);
+            
             outputStream.Flush();
         }
 
